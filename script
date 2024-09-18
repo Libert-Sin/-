@@ -1,0 +1,36 @@
+// ==UserScript==
+// @name         Force Windows Platform and UserAgent for dhlottery
+// @namespace    http://tampermonkey.net/
+// @version      0.5
+// @description  동행복권 사이트에서 PC로 인식되도록 합니다.
+// @author       ChatGPT
+// @match        *://*.dhlottery.co.kr/*
+// @grant        none
+// @run-at       document-start
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // navigator.platform 속성을 Windows로 변경합니다.
+    Object.defineProperty(navigator, 'platform', {
+        get: function() {
+            return 'Win32';
+        },
+        configurable: true
+    });
+
+    // navigator.userAgent 속성을 Windows용으로 변경합니다.
+    Object.defineProperty(navigator, 'userAgent', {
+        get: function() {
+            return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36';
+        },
+        configurable: true
+    });
+
+    // 모바일 페이지 리다이렉션 방지
+    if (location.hostname === 'm.dhlottery.co.kr') {
+        location.hostname = 'www.dhlottery.co.kr';
+    }
+
+})();
